@@ -27,7 +27,7 @@ Projeto do **Bootcamp II – Fase 2 (Entrega Intermediária)**.
 2. Clone o repositório e entre na pasta:
 
    ```bash
-   git clone https://github.com/SEU-USUARIO/tasktracker-projeto.git
+   git clone https://github.com/Vflima1/Tasktracker-projeto.git
    cd tasktracker-projeto
    ```
 
