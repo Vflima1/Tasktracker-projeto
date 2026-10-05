@@ -1,10 +1,43 @@
 """TaskTracker - Seu Gerenciador de Tarefas (Fase 2)
-Versão do COMMIT 3: estrutura principal (menu e loop), ainda sem validações.
+
+Aplicação CLI para cadastrar e visualizar tarefas.
+Os dados ficam apenas em memória (somem ao fechar o programa).
 """
 
 # Lista que guarda todas as tarefas em memória (cada tarefa é um dicionário)
 tarefas = []
 
+# Prioridades aceitas. A chave é o que o usuário pode digitar (em minúsculas)
+# e o valor é o texto padronizado que será salvo na tarefa.
+PRIORIDADES_VALIDAS = {
+    "alta": "Alta",
+    "média": "Média",
+    "media": "Média",
+    "baixa": "Baixa",
+}
+
+
+# ---------- Validações ----------
+
+def ler_titulo():
+    """Pede o título até receber um valor que não seja vazio nem só espaços."""
+    while True:
+        titulo = input("Título: ").strip()
+        if titulo:  # string vazia é "falsa" no Python
+            return titulo
+        print("Erro: o título é obrigatório e não pode ficar vazio.")
+
+
+def ler_prioridade():
+    """Pede a prioridade até receber Alta, Média (ou Media) ou Baixa."""
+    while True:
+        entrada = input("Prioridade (Alta/Média/Baixa): ").strip().lower()
+        if entrada in PRIORIDADES_VALIDAS:
+            return PRIORIDADES_VALIDAS[entrada]
+        print("Erro: prioridade inválida. Digite Alta, Média ou Baixa.")
+
+
+# ---------- Funcionalidades ----------
 
 def exibir_menu():
     """Mostra as opções do menu principal."""
@@ -15,14 +48,14 @@ def exibir_menu():
 
 
 def cadastrar_tarefa():
-    """Pede os dados ao usuário e guarda a nova tarefa na lista."""
+    """Coleta os dados (com validação) e guarda a nova tarefa na lista."""
     print("\n--- Cadastro de nova tarefa ---")
     tarefa = {
-        "titulo": input("Título: "),
-        "descricao": input("Descrição: "),
-        "prioridade": input("Prioridade (Alta/Média/Baixa): "),
-        "data_limite": input("Data limite (ex: 25/12/2026): "),
-        "status": "Pendente",
+        "titulo": ler_titulo(),
+        "descricao": input("Descrição: ").strip(),
+        "prioridade": ler_prioridade(),
+        "data_limite": input("Data limite (ex: 25/12/2026): ").strip(),
+        "status": "Pendente",  # sempre automático no cadastro
     }
     tarefas.append(tarefa)
     print("Tarefa cadastrada com sucesso!")
